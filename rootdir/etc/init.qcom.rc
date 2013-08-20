@@ -83,6 +83,10 @@ on early-boot
     write /sys/bus/msm_subsys/devices/subsys4/restart_level "related"
 
 on boot
+
+# Prevents permission denied error for telephony
+    chmod 0644 /proc/cmdline
+
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/type
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/state
     chown system system /sys/module/radio_iris_transport/parameters/fmsmd_set
