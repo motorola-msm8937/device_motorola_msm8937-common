@@ -150,6 +150,7 @@ PRODUCT_ODM_PROPERTIES += \
 
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.add_power_save=1 \
     persist.vendor.ims.dropset_feature=0 \
     persist.vendor.ims.disableADBLogs=0 \
     persist.vendor.ims.disableDebugDataPathLogs=0 \
