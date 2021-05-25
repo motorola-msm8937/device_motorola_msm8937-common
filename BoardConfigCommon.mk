@@ -68,6 +68,16 @@ BOARD_NO_CHARGER_LED := true
 # DRM
 TARGET_ENABLE_MEDIADRM_64 := true
 
+# Dexpreopt
+ifeq ($(HOST_OS),linux)
+  ifneq ($(TARGET_BUILD_VARIANT),eng)
+    WITH_DEXPREOPT_DEBUG_INFO := false
+    USE_DEX2OAT_DEBUG := false
+    DONT_DEXPREOPT_PREBUILTS := true
+    WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+  endif
+endif
+
 # Encryption
 TARGET_HW_DISK_ENCRYPTION := true
 
