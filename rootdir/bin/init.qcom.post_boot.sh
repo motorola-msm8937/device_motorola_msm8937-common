@@ -142,7 +142,7 @@ function 8937_sched_dcvs_hmp()
     echo 20000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate
     echo 1094400 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq
     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy
-    echo "1 960000:85 1094400:90 1344000:80" > /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
+    echo "1 200000:85 1094400:90 1344000:80" > /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads
     echo 40000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time
     echo 40000 > /sys/devices/system/cpu/cpu0/cpufreq/interactive/sampling_down_factor
 
@@ -154,7 +154,7 @@ function 8937_sched_dcvs_hmp()
     echo 20000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate
     echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq
     echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy
-    echo "1 768000:90" > /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads
+    echo "1 200000:90" > /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads
     echo 40000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time
     echo 40000 > /sys/devices/system/cpu/cpu4/cpufreq/interactive/sampling_down_factor
 
@@ -376,9 +376,9 @@ else
     fi
 
     # Set allocstall_threshold to 0 for all targets.
-    # Set swappiness to 100 for all targets
+    # Set swappiness to 60 for all targets
     echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
-    echo 100 > /proc/sys/vm/swappiness
+    echo 60 > /proc/sys/vm/swappiness
 
     configure_zram_parameters
 
@@ -432,7 +432,7 @@ case "$target" in
         fi
 
         case "$soc_id" in
-           "303" | "307" | "308" | "309" | "320" )
+           "303")
 
                   # Start Host based Touch processing
                   case "$hw_platform" in
@@ -582,8 +582,9 @@ case "$target" in
                 else
                     8937_sched_dcvs_hmp
                 fi
-                echo 960000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-                echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+                #puppets kernel
+                echo 200000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+                echo 200000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
                 # Disable L2-GDHS low power modes
                 echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/idle_enabled
                 echo N > /sys/module/lpm_levels/system/pwr/pwr-l2-gdhs/suspend_enabled
@@ -612,7 +613,7 @@ case "$target" in
                 echo 68 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres
                 echo 40 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
                 echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms
-                echo 1 > /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster
+                echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/is_big_cluster
 
                 # re-enable thermal core_control
                 echo 1 > /sys/module/msm_thermal/core_control/enabled
